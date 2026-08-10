@@ -1,11 +1,11 @@
 # Phiếu Phản Ánh — K4 Ngày 12
 
-
->
+>> **Bài làm cá nhân.** Trả lời bằng lời của chính bạn, dựa trên những gì bạn
+> quan sát được khi chạy code — không sao chép đáp án của người khác.
 > Cách trả lời: thay dòng `> *Câu trả lời của bạn*` bằng câu trả lời.
 > `grade.py` đếm số câu đã trả lời (15 điểm cho 10 câu).
 >
-> Họ và tên: ..........................  Mã học viên: ..........................
+> Họ và tên: Trần Văn Ngọc   Mã học viên: 2A202601512 
 
 ---
 
