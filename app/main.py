@@ -62,7 +62,7 @@ def get_cost_guard() -> CostGuard:
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     """CHO SẴN — chạy lúc app khởi động và lúc tắt."""
-    shutdown_guard.arm()
+#    shutdown_guard.arm()
     emit("service_started", service=SERVICE_NAME, version=SERVICE_VERSION)
     yield
     emit("service_stopped", service=SERVICE_NAME)
@@ -92,7 +92,20 @@ def healthz():
     lời câu hỏi "có cần restart container này không?". Nếu nó phụ thuộc
     Redis, Redis chết một nhịp là cả cụm container bị restart theo.
     """
-    raise NotImplementedError("TODO (CP1/CP4): cài đặt /healthz")
+    if shutdown_guard.draining:
+        return JSONResponse(
+            status_code=503,
+            content={"status": "draining"},
+        )
+
+    return JSONResponse(
+        status_code=200,
+        content={
+            "status": "ok",
+            "service": SERVICE_NAME,
+            "version": SERVICE_VERSION,
+        }
+    )
 
 
 @app.get("/readyz")
