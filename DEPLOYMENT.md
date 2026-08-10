@@ -30,10 +30,12 @@
 
 ## Kết Quả Chạy Thật
 
-- `GET /health` trả `200` với trạng thái `ok`.
-- `GET /ready` trả `200` với Redis sẵn sàng.
-- `POST /ask` không có API key trả `401` cùng header `WWW-Authenticate: Bearer`.
-- `POST /ask` kèm `X-API-Key` hợp lệ trả `200` và JSON có câu trả lời.
+- `GET /healthz` trả `200` với trạng thái `ok`.
+- `GET /readyz` trả `200` với Redis sẵn sàng.
+- `POST /chat` không có Bearer token trả `401` cùng header `WWW-Authenticate: Bearer`.
+- `POST /chat` kèm Bearer token hợp lệ trả `200` và JSON có câu trả lời.
+- Ngoài API contract của lab, service cũng hỗ trợ các alias production: `/health`,
+  `/ready`, và `/ask` với `X-API-Key`.
 
 ## Ảnh Chụp Màn Hình
 
