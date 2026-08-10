@@ -26,6 +26,7 @@ SCHEME = "Bearer"
 def verify_bearer_token(
     authorization: str | None = Header(default=None),
     x_client_id: str | None = Header(default=None),
+    x_api_key: str | None = Header(default=None),
 ) -> str:
     """Kiểm tra header ``Authorization``; trả về client_id nếu hợp lệ.
 
@@ -63,14 +64,14 @@ def verify_bearer_token(
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    if not authorization:
-        unauthorized()
+    if authorization:
+        scheme, _, token = authorization.partition(" ")
+        if scheme.lower() != SCHEME.lower() or not token:
+            unauthorized()
+    else:
+        token = x_api_key
 
-    scheme, _, token = authorization.partition(" ")
-    if scheme.lower() != SCHEME.lower() or not token:
-        unauthorized()
-
-    if not secrets.compare_digest(token, get_settings().api_token):
+    if not token or not secrets.compare_digest(token, get_settings().api_token):
         unauthorized()
 
     return x_client_id or ANONYMOUS_CLIENT
